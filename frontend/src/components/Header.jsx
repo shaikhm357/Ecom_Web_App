@@ -19,12 +19,12 @@ function Header() {
             <Nav className='ms-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link className='d-flex align-items-center'>
-                  <FaShoppingCart className='me-1' /> Cart
+                  <FaShoppingCart /> Cart
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to='/login'>
                 <Nav.Link href='/login' className='d-flex align-items-center'>
-                  <FaUser className='me-1' /> Sign In
+                  <FaUser className /> Sign In
                 </Nav.Link>
               </LinkContainer>
             </Nav>

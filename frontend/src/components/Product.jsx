@@ -1,8 +1,13 @@
-import { Card } from "react-bootstrap";
+import { Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 function Product({ product }) {
+  const renderTooltip = (props) => (
+    <Tooltip id='button-tooltip' {...props}>
+      {product.name}
+    </Tooltip>
+  );
   return (
     <Card className='my-3 p-3 rounded'>
       {/* image  */}
@@ -12,12 +17,18 @@ function Product({ product }) {
 
       {/* body title pricing*/}
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
-          <Card.Title as='div' className='product-title'>
-            <strong>{product.name}</strong>
-          </Card.Title>
-        </Link>
-        <Card.Text as='div' >
+        <OverlayTrigger
+          placement='bottom'
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip}
+        >
+          <Link to={`/product/${product._id}`}>
+            <Card.Title as='div' className='product-title'>
+              <strong>{product.name}</strong>
+            </Card.Title>
+          </Link>
+        </OverlayTrigger>
+        <Card.Text as='div'>
           <Rating
             value={product.rating}
             text={`${product.numReviews} reviews`}

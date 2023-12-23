@@ -11,7 +11,7 @@ function Product() {
   return (
     <>
       <Link to='/' className='btn btn-light my-3'>
-        Go Back{" "}
+        Go Back
       </Link>
       <Row>
         {/* product image  */}
