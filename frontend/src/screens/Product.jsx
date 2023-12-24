@@ -13,7 +13,7 @@ function Product() {
   useEffect(() => {
     const fetchProducts = async () => {
       const { data } = await axios.get(`/api/products/${productId}`);
-      setProduct(data);
+      setProduct(data.data);
     };
 
     fetchProducts();
@@ -29,7 +29,6 @@ function Product() {
         <Col md={5}>
           <Image src={product.image} alt={product.name} fluid></Image>
         </Col>
-        {console.log(product)}
         {/* name and rating  */}
         <Col md={4}>
           <ListGroup variant='flush'>

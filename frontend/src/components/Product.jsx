@@ -11,7 +11,7 @@ function Product({ product }) {
   return (
     <Card className='my-3 p-3 rounded'>
       {/* image  */}
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/products/${product._id}`}>
         <Card.Img src={product.image} />
       </Link>
 
@@ -22,7 +22,7 @@ function Product({ product }) {
           delay={{ show: 250, hide: 400 }}
           overlay={renderTooltip}
         >
-          <Link to={`/product/${product._id}`}>
+          <Link to={`/products/${product._id}`}>
             <Card.Title as='div' className='product-title'>
               <strong>{product.name}</strong>
             </Card.Title>
