@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Row, Col, Button, Image, ListGroup, Card } from "react-bootstrap";
 import Rating from "../components/Rating.jsx";
 import { useGetProductByIdQuery } from "../slices/productsApiSlice.js";
+import Loader from "../components/Loader.jsx";
+import Message from "../components/Message.jsx";
 
 function Product() {
   const { id: productId } = useParams();
@@ -14,9 +16,11 @@ function Product() {
         Go Back
       </Link>
       {isLoading ? (
-        <h2>Loading..</h2>
+        <Loader />
       ) : error ? (
-        <div>{error?.data?.message || error.error} </div>
+        <Message variant='danger'>
+          {error?.data?.message || error.error}{" "}
+        </Message>
       ) : (
         <Row>
           {/* product image  */}
