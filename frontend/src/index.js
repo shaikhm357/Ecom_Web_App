@@ -14,7 +14,7 @@ import "./assets/styles/bootstrap.custom.css";
 import reportWebVitals from "./reportWebVitals";
 import Home from "./screens/Home";
 import Product from "./screens/Product";
-import Cart from "./screens/Cart.js";
+import Cart from "./screens/Cart.jsx";
 import store from "./store.js";
 
 const router = createBrowserRouter(
