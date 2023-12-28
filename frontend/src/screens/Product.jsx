@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Form,
   Row,
@@ -12,13 +13,23 @@ import {
 } from "react-bootstrap";
 import Rating from "../components/Rating.jsx";
 import { useGetProductByIdQuery } from "../slices/productsApiSlice.js";
+import { addToCart } from "../slices/cartSlice.js";
 import Loader from "../components/Loader.jsx";
 import Message from "../components/Message.jsx";
 
 function Product() {
   const [qty, setQty] = useState(1);
   const { id: productId } = useParams();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   return (
     <>
@@ -102,6 +113,7 @@ function Product() {
                     className='btn-block'
                     type='button'
                     disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add To Cart
                   </Button>
