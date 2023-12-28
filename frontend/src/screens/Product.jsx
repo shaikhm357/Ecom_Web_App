@@ -1,12 +1,22 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, Image, ListGroup, Card } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Image,
+  ListGroup,
+  Card
+} from "react-bootstrap";
 import Rating from "../components/Rating.jsx";
 import { useGetProductByIdQuery } from "../slices/productsApiSlice.js";
 import Loader from "../components/Loader.jsx";
 import Message from "../components/Message.jsx";
 
 function Product() {
+  const [qty, setQty] = useState(1);
   const { id: productId } = useParams();
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
@@ -65,6 +75,28 @@ function Product() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col> Qty </Col>
+                      <Col>
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+
                 <ListGroup.Item>
                   <Button
                     className='btn-block'
