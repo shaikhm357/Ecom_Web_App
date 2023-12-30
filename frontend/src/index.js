@@ -17,6 +17,7 @@ import Product from "./screens/Product";
 import Cart from "./screens/Cart.jsx";
 import store from "./store.js";
 import Login from "./screens/Login.jsx";
+import Register from "./screens/Register.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path='/products/:id' element={<Product />} />
       <Route path='/cart' element={<Cart />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
     </Route>
   )
 );
