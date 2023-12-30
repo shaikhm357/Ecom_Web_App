@@ -9,9 +9,11 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducer: {
+  reducers: {
     setCredentials: (state, action) => {
+      console.log("befor update==>", state);
       state.userInfo = action.payload;
+      console.log("after update==>", state);
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     }
   }
