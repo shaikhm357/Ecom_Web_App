@@ -6,6 +6,7 @@ import FormContainer from "../components/FormContainer";
 import { saveShippingAddress } from "../slices/cartSlice.js";
 
 function Shipping() {
+  // fect data from state and spead in fields
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
@@ -21,6 +22,7 @@ function Shipping() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    // call the action and send data
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate("/payment");
   };
