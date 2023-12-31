@@ -12,7 +12,6 @@ import { clearCartItems } from "../slices/cartSlice.js";
 export default function PlaceOrder() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  console.log('cart',cart);
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
@@ -36,7 +35,6 @@ export default function PlaceOrder() {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice
       }).unwrap();
-      console.log(res);
 
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
@@ -136,7 +134,7 @@ export default function PlaceOrder() {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                {error && <Message variant='danger'>{error?.message}</Message>}
+                {error && <Message variant='danger'>{error}</Message>}
               </ListGroup.Item>
 
               <ListGroup.Item>
