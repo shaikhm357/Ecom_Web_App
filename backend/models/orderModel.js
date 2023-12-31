@@ -9,22 +9,10 @@ const orderSchema = mongoose.Schema(
     },
     orderItems: [
       {
-        name: {
-          type: String,
-          required: true
-        },
-        qty: {
-          type: Number,
-          required: true
-        },
-        image: {
-          type: String,
-          required: true
-        },
-        price: {
-          type: Number,
-          required: true
-        },
+        name: { type: String, required: true },
+        qty: { type: Number, required: true },
+        image: { type: String, required: true },
+        price: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -44,11 +32,11 @@ const orderSchema = mongoose.Schema(
     },
     paymentResult: {
       id: { type: String },
-      status: String,
-      updated_time: String,
-      email_address: String
+      status: { type: String },
+      update_time: { type: String },
+      email_address: { type: String }
     },
-    itemPrice: {
+    itemsPrice: {
       type: Number,
       required: true,
       default: 0.0
@@ -90,4 +78,6 @@ const orderSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
+
+export default Order;
