@@ -24,6 +24,8 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Payment from "./screens/Payment.jsx";
 import PlaceOrder from "./screens/PlaceOrder.jsx";
 import Order from "./screens/Order.jsx";
+import StripeSuccess from "./components/StripeSuccess.jsx";
+import StripeCancel from "./components/StripeCancel.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +40,8 @@ const router = createBrowserRouter(
         <Route path='/payment' element={<Payment />} />
         <Route path='/placeorder' element={<PlaceOrder />} />
         <Route path='/order/:id' element={<Order />} />
+        <Route path='/:id/success' element={<StripeSuccess />} />
+        <Route path='/:id/cancel' element={<StripeCancel />} />
       </Route>
     </Route>
   )

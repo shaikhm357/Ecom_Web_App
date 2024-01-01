@@ -3,6 +3,7 @@ import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import {
   useGetOrderDetailsQuery,
   useGetPaypalClienIdQuery,
+  useGetStripeRedirectUrlMutation,
   usePayOrderMutation
 } from "../slices/orderApiSlice.js";
 import Loader from "../components/Loader.jsx";
@@ -23,6 +24,9 @@ function Order() {
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
+  const [getStripeUrl, { isLoading: loadingStripe }] =
+    useGetStripeRedirectUrlMutation();
+
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const {
@@ -31,7 +35,7 @@ function Order() {
     error: errorPaypal
   } = useGetPaypalClienIdQuery();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (!errorPaypal && !loadingPaypal && paypal.clientId) {
@@ -51,7 +55,7 @@ function Order() {
         }
       }
     }
-  }, [order, paypal, paypalDispatch, errorPaypal]);
+  }, [order, paypal, paypalDispatch, errorPaypal, loadingPaypal]);
 
   const onApproveTest = async () => {
     await payOrder({ orderId, details: { payer: {} } });
@@ -88,6 +92,19 @@ function Order() {
         toast.error(err?.data?.message || err.message);
       }
     });
+  };
+
+  const paymentHandler = async () => {
+    try {
+      const { data } = await getStripeUrl({
+        totalPrice: cart.totalPrice,
+        orderId
+      });
+      console.log(data, cart.totalPrice);
+      window.location.href = data.url;
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
   };
 
   return isLoading ? (
@@ -187,7 +204,7 @@ function Order() {
                   {loadingPay && <Loader />}
                   {isPending ? (
                     <Loader />
-                  ) : (
+                  ) : cart.paymentMethod === "paypal" ? (
                     <div>
                       <Button
                         onClick={onApproveTest}
@@ -203,7 +220,12 @@ function Order() {
                         ></PayPalButtons>
                       </div>
                     </div>
+                  ) : (
+                    <Button onClick={paymentHandler} className='btn-block'>
+                      Pay Now
+                    </Button>
                   )}
+                  {loadingStripe && <Loader />}
                 </ListGroup.Item>
               )}
               {/* mark as delivered */}

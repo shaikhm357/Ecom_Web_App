@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice.js";
-import { ORDERS_URL, PAYPAL_URL } from "../constants.js";
+import { ORDERS_URL, PAYPAL_URL, STRIPE_URL } from "../constants.js";
 
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,6 +28,13 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         url: PAYPAL_URL
       }),
       keepUnusedDataFor: 5
+    }),
+    getStripeRedirectUrl: builder.mutation({
+      query: (data) => ({
+        url: STRIPE_URL,
+        method: "POST",
+        body: data
+      })
     })
   })
 });
@@ -36,5 +43,6 @@ export const {
   useCreateOrderMutation,
   useGetOrderDetailsQuery,
   usePayOrderMutation,
-  useGetPaypalClienIdQuery
+  useGetPaypalClienIdQuery,
+  useGetStripeRedirectUrlMutation
 } = orderApiSlice;
