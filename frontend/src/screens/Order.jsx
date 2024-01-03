@@ -3,7 +3,7 @@ import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import {
   useGetOrderDetailsQuery,
   useGetPaypalClienIdQuery,
-  useGetStripeRedirectUrlMutation,
+  // useGetStripeRedirectUrlMutation,
   usePayOrderMutation
 } from "../slices/orderApiSlice.js";
 import Loader from "../components/Loader.jsx";
@@ -12,6 +12,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import RazorpayButton from "../components/RazorPayButton.jsx";
 
 function Order() {
   const { id: orderId } = useParams();
@@ -24,8 +25,8 @@ function Order() {
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-  const [getStripeUrl, { isLoading: loadingStripe }] =
-    useGetStripeRedirectUrlMutation();
+  // const [getStripeUrl, { isLoading: loadingStripe }] =
+  //   useGetStripeRedirectUrlMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -94,18 +95,18 @@ function Order() {
     });
   };
 
-  const paymentHandler = async () => {
-    try {
-      const { data } = await getStripeUrl({
-        totalPrice: cart.totalPrice,
-        orderId
-      });
-      console.log(data, cart.totalPrice);
-      window.location.href = data.url;
-    } catch (err) {
-      toast.error(err?.data?.message || err.message);
-    }
-  };
+  // const paymentHandler = async () => {
+  //   try {
+  //     const { data } = await getStripeUrl({
+  //       totalPrice: cart.totalPrice,
+  //       orderId
+  //     });
+  //     console.log(data, cart.totalPrice);
+  //     window.location.href = data.url;
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.message);
+  //   }
+  // };
 
   return isLoading ? (
     <Loader />
@@ -221,11 +222,14 @@ function Order() {
                       </div>
                     </div>
                   ) : (
-                    <Button onClick={paymentHandler} className='btn-block'>
-                      Pay Now
-                    </Button>
+                    <>
+                      {/* <Button onClick={paymentHandler} className='btn-block'>
+                        Pay Now
+                      </Button> */}
+                      <RazorpayButton />
+                    </>
                   )}
-                  {loadingStripe && <Loader />}
+                  {/* {loadingStripe && <Loader />} */}
                 </ListGroup.Item>
               )}
               {/* mark as delivered */}

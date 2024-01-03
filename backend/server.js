@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoute.js";
+import razorpayRoutes from "./routes/razorPayRoute.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import Stripe from "stripe";
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/config/razorpay", razorpayRoutes);
 
 app.post("/api/create-checkout-session", async (req, res) => {
   const { totalPrice, orderId } = req.body;
@@ -57,6 +59,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
 app.get("/api/config/paypal", (req, res) => {
   res.status(200).send({ clientId: process.env.PAYPAL_CLIEN_ID });
 });
+
 
 app.use(notFound);
 app.use(errorHandler);
