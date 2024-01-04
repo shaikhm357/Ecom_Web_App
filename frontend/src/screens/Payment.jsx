@@ -47,11 +47,11 @@ function Payment() {
             ></Form.Check>
             <Form.Check
               type='radio'
-              label='Stripe'
-              id='stripe'
-              checked={paymentMethod === "stripe"}
+              label='RazorPay'
+              id='razorpay'
+              checked={paymentMethod === "razorpay"}
               name='paymentMethod'
-              value='stripe'
+              value='razorpay'
               className='my-2'
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
